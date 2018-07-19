@@ -20,7 +20,7 @@
 #include <ctime>
 #define REP(i, n) for(int i = 0; i < (int)(n); i++)
 #define FOR(i, j, k) for(int i = (int)(j); i < (int)(k); ++i)
-#define ROF(i, j, k) for(int i = (int)(j); i >= 0; --i)
+#define ROF(i, j, k) for(int i = (int)(j); i >= (int)(k); --i)
 #define FORLL(i, n, m) for(long long i = n; i < (long long)(m); i++)
 #define SORT(v, n) sort(v, v+n)
 #define REVERSE(v) reverse((v).begin(), (v).end())
@@ -38,7 +38,7 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 
 
 int
-main(void){
+main(void){  
   int n;
   string s;
   cin >> n >> s;
