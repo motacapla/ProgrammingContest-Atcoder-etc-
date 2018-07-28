@@ -43,18 +43,17 @@ main(void){
   ll n, t;
   cin >> n >> t;
   ll a[n];
-  ll a_min[n];
+  ll a_min, a_min_prev;
   int count = 0;
   REP(i, n){
     cin >> a[i];    
-  }
-  
+  }  
   ll diff_m=0LL;
   ll temp_m;
-  a_min[0] = a[0];
-  FOR(i, 1, n) {
-    a_min[i] = min(a_min[i-1], a[i]);
-    temp_m = (a[i] - a_min[i-1]);
+  a_min_prev = a[0];
+  FOR(i, 1, n) {    
+    a_min = min(a_min_prev, a[i]);
+    temp_m = (a[i] - a_min_prev);
     if(temp_m > diff_m) {
       diff_m = temp_m;
       count = 1;
@@ -62,6 +61,7 @@ main(void){
     else if (temp_m == diff_m) {
       ++count;
     }
+    a_min_prev = a_min;
   }
  
   cout << count << endl;
