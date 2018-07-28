@@ -40,10 +40,31 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 
 int
 main(void){  
-  int n;
-  string s;
-  cin >> n >> s;
-    
+  ll n, t;
+  cin >> n >> t;
+  ll a[n];
+  ll a_min[n];
+  int count = 0;
+  REP(i, n){
+    cin >> a[i];    
+  }
+  
+  ll diff_m=0LL;
+  ll temp_m;
+  a_min[0] = a[0];
+  FOR(i, 1, n) {
+    a_min[i] = min(a_min[i-1], a[i]);
+    temp_m = (a[i] - a_min[i-1]);
+    if(temp_m > diff_m) {
+      diff_m = temp_m;
+      count = 1;
+    }
+    else if (temp_m == diff_m) {
+      ++count;
+    }
+  }
+ 
+  cout << count << endl;
   
   return 0;
 }

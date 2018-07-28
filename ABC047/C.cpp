@@ -40,10 +40,15 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 
 int
 main(void){  
-  int n;
   string s;
-  cin >> n >> s;
-    
+  cin >> s;
+
+  int count = 0;
+  FOR(i, 1, s.size()){
+    if(s[i-1] != s[i]) ++count;
+  }
+
+  cout << count << endl;
   
   return 0;
 }
