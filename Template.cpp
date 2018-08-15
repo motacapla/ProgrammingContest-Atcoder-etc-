@@ -1,3 +1,5 @@
+//$g++ -std=c++11 Template.cpp 
+
 //#include <bits/stdc++.h>
 #include <iostream>
 #include <complex>
@@ -37,6 +39,8 @@ ll MUL(ll x, ll y) { return x*y % MOD; }
 ll POW(ll x, ll e) { ll v=1; for(; e; x=MUL(x,x), e>>=1) if (e&1) v = MUL(v,x); return v; }
 ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 
+priority_queue<int> q_descending;
+priority_queue<int, vector<int>, greater<int> > q_ascending;
 
 int
 main(void){  
