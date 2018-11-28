@@ -55,11 +55,7 @@ main(void){
   //偶数かつ2n>=kの場合、 (a, b, c) % k = (k/2, k/2, k/2)が存在
   
   if(k%2 == 0){
-    int c=0;
-    FOR(i, 1, n+1){
-      if(i%k == k/2) c++;
-    }
-    ans += c*c*c;
+    ans += ((n+k/2)/k)*((n+k/2)/k)*((n+k/2)/k);
   }
   
   cout << ans << endl;
