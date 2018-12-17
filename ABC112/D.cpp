@@ -48,8 +48,8 @@ int solve(int n, int m){
   int ans = 0;
   for(int i=1; i*i <= m; i++){
     if(m % i == 0){
-      if(i <= m/n) ans = std::max(ans, i);
-      if((m/i) <= (m/n)) ans = std::max(ans, m/i);
+      if(i <= m/n) ans = std::max(ans, i); // 通常通りの約数(i)  m:16, i:2, m/i:8
+      if((m/i) <= (m/n)) ans = std::max(ans, m/i); // もう片側の約数(m/i)  
     }
   }
   return ans;
