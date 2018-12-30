@@ -52,7 +52,7 @@ ll calc(ll x){
   dp[0][0][0] = 1;
   REP(i, n) REP(j, 2) REP(k, 2){
     if(dp[i][j][k] == 0) continue;
-    int lim = (j?9:s[i]-'0');
+    int lim = (j?9:s[i]-'0'); 
     REP(num, lim+1) dp[i+1][j||num<lim][k||num==4||num==9] += dp[i][j][k];
   }
   ll res = dp[n][0][1] + dp[n][1][1];
@@ -72,7 +72,14 @@ main(void){
   /* 
      桁DB
      0 ~ N に含まれる禁止の数 f(N)
-     dp[i][j]: i桁目まで確定、N未満であることが確定している/いない=1,0
+     dp[i][j][k]: i桁目まで確定  N未満であることが確定しているorいないj=1or0  数列に4, 9が含まれないor含まれるk=1or0 (非0真なため)
+
+     //分かりやすいブログ
+     http://torus711.hatenablog.com/entry/20150423/1429794075
+
+     例. N = 12345
+     123?? -> 3桁目が"3"なら4桁目は"1, 2, 3, 4"(=D), 違うなら"0, ..., 9"どれでも良い
+     
   */
   
   
