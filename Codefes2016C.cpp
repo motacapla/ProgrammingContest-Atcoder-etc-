@@ -88,7 +88,10 @@ main(void){
     cin >> k;
     for(int j=0, l; j<k; ++j){
       cin >> l;
+      //lだとかぶるからダメ , 言葉と人は違うものなので分ける
       uf.unite(i, n+l-1);
+      //uf.unite(i, n+l-1);
+      //cout << n+l-1 << endl;
     }
   }
 
