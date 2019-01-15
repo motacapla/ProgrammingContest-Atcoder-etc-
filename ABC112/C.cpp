@@ -42,12 +42,35 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 priority_queue<int> q_descending;
 priority_queue<int, vector<int>, greater<int> > q_ascending;
 
+int x[101], y[101];
+ll h[101];
+
+ll tmp[101];
+
+pair<ll, ll> p[101];
+
+int get_height(int cx, int cy, int n){
+  int i = 0;
+  for(; h[i] == 0; i++){}
+  int ch = h[i] + abs(x[i] - cx) + abs(y[i] - cy);
+  REP(i, n) if(h[i] != max(ch - abs(x[i] - cx) - abs(y[i] - cy), 0)) return 0;
+  //REP(i, n) if(h[i] != ch - abs(x[i] - cx) - abs(y[i] - cy)) return 0;
+
+  return ch;
+}
+
 int
 main(void){  
+  ios_base::sync_with_stdio(false);
+
   int n;
-  string s;
-  cin >> n >> s;
-    
+  cin >> n;
+  REP(i, n) cin >> x[i] >> y[i] >> h[i];
   
+  REP(cy, 101) REP(cx, 101) {
+    int ch = get_height(cx, cy, n);
+    if(ch > 0) {cout << cx << ' ' << cy << ' ' << ch << endl; return 0;}
+  }
+   
   return 0;
 }

@@ -42,12 +42,51 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 priority_queue<int> q_descending;
 priority_queue<int, vector<int>, greater<int> > q_ascending;
 
+ll dp[20][2][2];
+
+ll calc(ll x){
+  string s = to_string(x);
+  int n = s.size();
+  memset(dp, 0, sizeof(dp));
+
+  dp[0][0][0] = 1;
+  REP(i, n) REP(j, 2) REP(k, 2){
+    if(dp[i][j][k] == 0) continue;
+    int lim = (j?9:s[i]-'0'); 
+    REP(num, lim+1) dp[i+1][j||num<lim][k||num==4||num==9] += dp[i][j][k];
+  }
+  ll res = dp[n][0][1] + dp[n][1][1];
+  return res;
+}
+
 int
 main(void){  
-  int n;
-  string s;
-  cin >> n >> s;
-    
+  ios_base::sync_with_stdio(false);
+
+  ll a, b;
+  cin >> a >> b;
+  a--;
+
+  cout << calc(b) - calc(a) << endl;
+  
+  /* 
+     桁DB
+     0 ~ N に含まれる禁止の数 f(N)
+     dp[i][j][k]: i桁目まで確定  N未満であることが確定しているorいないj=1or0  数列に4, 9が含まれないor含まれるk=1or0 (非0真なため)
+     最後は N 未満が確定していない部分も足し合わせるので、 ans = dp[N][0 || 1][1]となる
+
+     //分かりやすいブログ
+     http://torus711.hatenablog.com/entry/20150423/1429794075
+
+     dpの中身 ...
+     1. 見てきた桁数
+     2. もう一つの典型的な状態の持ち方が "今見ている桁の自由度"です。
+
+     例. N = 12345
+     123?? -> 3桁目が"3"なら4桁目は"1, 2, 3, 4"(=D), 違うなら"0, ..., 9"どれでも良い
+     
+  */
+  
   
   return 0;
 }

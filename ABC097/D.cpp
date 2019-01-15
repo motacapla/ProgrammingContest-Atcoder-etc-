@@ -42,12 +42,54 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 priority_queue<int> q_descending;
 priority_queue<int, vector<int>, greater<int> > q_ascending;
 
+template <typename T>
+class UnionFind {
+public:
+  T n;
+  vector <T> d;
+  UnionFind(T n) :d(n, -1) {} 
+  int find(T x){
+    if(d[x] < 0) return x;
+    return d[x] = find(d[x]);
+  }
+  bool unite(T x, T y){
+    x = find(x);
+    y = find(y);
+    if(x == y) return false;
+    if(size(x) < size(y)) swap(x, y);
+    d[x] += d[y];
+    d[y] = x;
+    return true;
+  }
+  int size(T v){ return -d[find(v)];}
+  bool same(T x, T y){
+    return find(x) == find(y);
+  }
+};
+
+int p[1000000], x[1000000], y[1000000];
+
 int
 main(void){  
-  int n;
-  string s;
-  cin >> n >> s;
-    
+  ios_base::sync_with_stdio(false);
+
+  int n, m;
+  cin >> n >> m;
+  REP(i, n) cin >> p[i];
+  REP(i, m) cin >> x[i] >> y[i];
+
+  UnionFind<int> uf = UnionFind<int>(n+1); //nだとREでるの謎い..
+
+  REP(i, m) uf.unite(x[i], y[i]);
+
+  ll ans = 0LL;
+
+  REP(i, n) if(uf.same(i+1, p[i])) ans++; 
+
+  cout << ans << endl;
+  
+  //if(uf.unite(x[0], y[0])) cout << "success" << endl;
+  //cout << uf.size(5) << endl;;
   
   return 0;
 }

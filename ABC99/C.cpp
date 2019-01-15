@@ -42,12 +42,53 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 priority_queue<int> q_descending;
 priority_queue<int, vector<int>, greater<int> > q_ascending;
 
+
+int dp[1000000];
+
 int
 main(void){  
+  ios_base::sync_with_stdio(false);
+
   int n;
-  string s;
-  cin >> n >> s;
-    
+  cin >> n;
+
+  
+  /*
+  int res = n;
+  REP(i, n+1){
+    int cc=0;
+    int t=i;
+    while(t>0) cc += t%6, t/=6; //6^* で割れるだけ割る
+    t = n-i;
+    while(t>0) cc += t%9, t/=9; //9^* で割れるだけ割る
+    if(res > cc) res = cc; //これまでの中で最も小さいのを採用
+  } 
+
+  cout << res << endl;
+
+  int test = 13;
+  int cc = 0;
+  cc += test%6, test/=6;
+  
+  //cout << cc << " " << test << endl;
+  */
+  
+  REP(i, n+1) dp[i] = i;
+  dp[0] = 0;
+  
+  for(int i=6; i < n+1; i++){
+    for(int j=6; j <= i; j *= 6){
+      dp[i] = min(dp[i-j] + 1, dp[i]);
+    }
+  }
+
+  for(int i=9; i < n+1; i++){
+    for(int j=9; j <= i; j *= 9){
+      dp[i] = min(dp[i-j] + 1, dp[i]);
+    }
+  }
+  
+  cout << dp[n] << endl;    
   
   return 0;
 }

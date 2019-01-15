@@ -44,10 +44,31 @@ priority_queue<int, vector<int>, greater<int> > q_ascending;
 
 int
 main(void){  
-  int n;
-  string s;
-  cin >> n >> s;
-    
+  ios_base::sync_with_stdio(false);
+
+  int n, k;
+  cin >> n >> k;
+  int a[n];
+  REP(i, n) cin >> a[i];
+
+  /*
+  int itr = 0;
+  REP(i, n){
+    if(a[i] == 1){
+      itr = i;
+    }
+  }
+  */
+
+  double dtmp = (double)(n-1)/(k-1);
+  //cout << dtmp << endl;
+  
+  int ans = ceil(dtmp);
+
+  cout << ans << endl;
+
+  
+
   
   return 0;
 }

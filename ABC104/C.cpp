@@ -36,6 +36,7 @@ typedef pair<int, int> P;
 #define REVERSE(v) reverse((v).begin(), (v).end())
 #define DBG(x) cerr << #x << ": " << x << "\n";
 
+
 ll ADD(ll x, ll y) { return (x+y) % MOD; }
 ll SUB(ll x, ll y) { return (x-y+MOD) % MOD; }
 ll MUL(ll x, ll y) { return x*y % MOD; }
@@ -48,8 +49,41 @@ main(void){
   ll d, g;
   cin >> d >> g;
 
-  ll p[d], c[d];
-  REP(i, d) cin >> p[i] >> c[i];
+  int p[d];
+  ll c[d];
+
+  REP(i, d) {
+    cin >> p[i] >> c[i];
+  }
+
+  bool f=false;
+  int ans=0;
+  ll sum = 0;
+  ROF(i, d-1, 0){
+    f = false;
+    while(p[i]>0){
+      sum += (i+1)*100;
+      ans++;
+      p[i]--;
+      if(sum == g){
+	f=true;
+	break;
+      }
+      else if(sum > g) {
+	sum -= (i+1)*100;
+	ans--;
+	p[i]++;
+	break;
+      }
+    }
+    if(sum == g || f){      
+      break;
+    }    
+    if(p[i] == 0){
+      sum += c[i];
+    }
+  }
+
 
   /*
   ll sum = g;
@@ -72,7 +106,7 @@ main(void){
       }      
     }
   }
-  */
+  
 
   int ans = INF, max_rest = 0;
   for(int mask=0; mask<(1<<d); mask++){
@@ -97,8 +131,7 @@ main(void){
     }
     ans = min(ans, num);
   }
-
-  
+*/
   cout << ans << endl;
   
   return 0;

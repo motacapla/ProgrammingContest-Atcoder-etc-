@@ -44,9 +44,21 @@ priority_queue<int, vector<int>, greater<int> > q_ascending;
 
 int
 main(void){  
-  int n;
-  string s;
-  cin >> n >> s;
+  ios_base::sync_with_stdio(false);
+
+  ll n, k;
+  cin >> n >> k;
+  //倍数を考える問題 --> modを考える
+
+  ll ans = 0LL;
+  ans += (n/k)*(n/k)*(n/k);
+  //偶数かつ2n>=kの場合、 (a, b, c) % k = (k/2, k/2, k/2)が存在
+  
+  if(k%2 == 0){
+    ans += ((n+k/2)/k)*((n+k/2)/k)*((n+k/2)/k);
+  }
+  
+  cout << ans << endl;
     
   
   return 0;

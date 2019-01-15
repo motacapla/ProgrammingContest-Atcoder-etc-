@@ -21,6 +21,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <climits>
+
 #define REP(i, n) for(int i = 0; i < (int)(n); i++)
 #define FOR(i, j, k) for(int i = (int)(j); i < (int)(k); ++i)
 #define ROF(i, j, k) for(int i = (int)(j); i >= (int)(k); --i)
@@ -42,12 +43,65 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 priority_queue<int> q_descending;
 priority_queue<int, vector<int>, greater<int> > q_ascending;
 
+int x[1000], y[1000];
+int relations[1000][1000];
+
 int
 main(void){  
-  int n;
-  string s;
-  cin >> n >> s;
+  ios_base::sync_with_stdio(false);
+
+  ll n, m;
+  cin >> n >> m;
+
+  if(m == 0) { cout << 1 << endl; return 0;}
+  
+  REP(i, n) REP(j, n) relations[i][j] = false;
+
+  REP(i, m) {
+    cin >> x[i] >> y[i];
+    x[i]--;
+    y[i]--;
+    relations[x[i]][y[i]]++;
+    relations[x[i]][x[i]]++;
+    relations[y[i]][y[i]]++;    
+    relations[y[i]][x[i]]++;
+  }
+  
+  int ans = 0;  
+  for(int bit = 0; bit < (1<<n); ++bit){
+
+    //bitの数を数えられる
+    //ll num = __builtin_popcount(bit);
     
+    vector<int> v;
+    REP(i, n){
+      //{0, ..., 0}から{1, ..., 1}まで
+      if(((bit >> i)&1) == 1) v.push_back(i);
+      //{0, ..., 0}から{0, ..., n}まで
+      //if((bit & (1 << i)) == 1) v.push_back(i);
+    }
+    
+    bool ok = true;    
+    REP(i, (int)v.size()){
+      REP(j, (int)v.size()){
+	if(relations[v[i]][v[j]] == 0) ok = false;	
+      }
+    }
+    if(ok) ans = max(ans, (int)v.size());
+  }
+
+  cout << ans << "\n";
   
   return 0;
 }
+
+  /*
+  //memset(d, -1, sizeof(d));
+  fill(d.begin(), d.end(), -1);
+  
+  REP(i, m) unite(x[i], y[i]);
+
+  //REP(i, m) cout << size(i+1) << endl;
+  ll ans = 0;
+  REP(i, m) {if(ans < size(i+1)) ans = size(i+1);}
+  */

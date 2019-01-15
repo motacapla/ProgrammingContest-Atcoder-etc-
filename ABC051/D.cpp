@@ -1,5 +1,3 @@
-//$g++ -std=c++11 Template.cpp 
-
 //#include <bits/stdc++.h>
 #include <iostream>
 #include <complex>
@@ -39,15 +37,47 @@ ll MUL(ll x, ll y) { return x*y % MOD; }
 ll POW(ll x, ll e) { ll v=1; for(; e; x=MUL(x,x), e>>=1) if (e&1) v = MUL(v,x); return v; }
 ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 
-priority_queue<int> q_descending;
-priority_queue<int, vector<int>, greater<int> > q_ascending;
+const int MAX_V = 110;
+int d[MAX_V][MAX_V];
+
+void setCost(int d[MAX_V][MAX_V], int s, int e, int cost){
+    d[s][e] = d[e][s] = cost;
+}
 
 int
 main(void){  
-  int n;
-  string s;
-  cin >> n >> s;
-    
+  int n, m;  
+  cin >> n >> m;
+  const int V = n;
   
+  FOR(i, 1, V+1){
+    FOR(j, 1, V+1){
+      if (i == j) d[i][j] = 0;
+      else d[i][j] = MOD;
+    }
+  }
+  
+  ll a[m+1], b[m+1], c[m+1];
+  FOR(i, 1, m+1){
+    cin >> a[i] >> b[i] >> c[i];
+    setCost(d, a[i], b[i], c[i]);
+  }
+  
+  // Warshall Floyd
+  FOR(k, 1, 1+V){
+    FOR(i, 1, 1+V){
+      FOR(j, 1, 1+V){
+	d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
+      }
+    }
+  }
+
+  int ans=0;
+  FOR(i, 1, 1+m){
+    if(d[a[i]][b[i]] < c[i]) ++ans;
+  }
+
+  cout << ans << endl;
+
   return 0;
 }

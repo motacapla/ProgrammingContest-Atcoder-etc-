@@ -1,3 +1,5 @@
+//解説AC
+
 //$g++ -std=c++11 Template.cpp 
 
 //#include <bits/stdc++.h>
@@ -42,12 +44,49 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 priority_queue<int> q_descending;
 priority_queue<int, vector<int>, greater<int> > q_ascending;
 
+ll dp[110][10];
+
 int
 main(void){  
-  int n;
-  string s;
-  cin >> n >> s;
-    
+  ios_base::sync_with_stdio(false);
+
+  int h, w, k;
+
+  cin >> h >> w >> k;
+
+  //if(w == 1){ cout << "1" << endl; return 0;}
+  dp[0][0] = 1;
+  
+  for(int i=0; i<h; i++){
+    for(int j=0; j<w; j++){
+      for(int bit=0; bit < 1 << (w-1); bit++){
+	int ok = true;  
+	for(int l=0; l<w-2; l++){
+	  if( (bit >> l & 1) == 1 && (bit >> (l+1) & 1) == 1 ){
+	    //cout << "bit:" << bit << " l:" << l << " false" << endl;
+	    ok = false;
+	  }
+	}
+	if(ok){
+	  if(j >= 1 && (bit >> j-1 & 1) == 1){
+	    dp[i+1][j-1] += dp[i][j];
+	    dp[i+1][j-1] %= MOD;
+	  }
+	  else if( j <= w-2 && (bit >> j & 1) == 1){
+	    dp[i+1][j+1] += dp[i][j];
+	    dp[i+1][j+1] %= MOD;
+	  }
+	  else{
+	    dp[i+1][j] += dp[i][j];
+	    dp[i+1][j] %= MOD;
+	  }
+	}
+      }
+    }
+  }
+
+  cout << dp[h][k-1] << endl;
+
   
   return 0;
 }

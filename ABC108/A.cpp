@@ -44,10 +44,21 @@ priority_queue<int, vector<int>, greater<int> > q_ascending;
 
 int
 main(void){  
-  int n;
-  string s;
-  cin >> n >> s;
-    
+  ios_base::sync_with_stdio(false);
+
+  int k;
+  cin >> k;
+  int odd,even;
+  if(k%2 == 0){
+    odd = k/2;
+    even = k/2;
+  }
+  else{
+    odd = k/2;
+    even = k/2+1;
+  }
+  cout << odd*even << endl;
+  
   
   return 0;
 }

@@ -21,6 +21,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <climits>
+#include <iomanip>
+
 #define REP(i, n) for(int i = 0; i < (int)(n); i++)
 #define FOR(i, j, k) for(int i = (int)(j); i < (int)(k); ++i)
 #define ROF(i, j, k) for(int i = (int)(j); i >= (int)(k); --i)
@@ -44,10 +46,33 @@ priority_queue<int, vector<int>, greater<int> > q_ascending;
 
 int
 main(void){  
-  int n;
-  string s;
-  cin >> n >> s;
-    
+  ios_base::sync_with_stdio(false);
+
+  vector<int> v;
+  int a;
+  REP(i, 3){
+    cin >> a;
+    v.push_back(a);
+  }
+
+  sort(v.begin(), v.end());
+
+  int diff_ab = v[1] - v[0], diff_bc = v[2] - v[1];
+  int ans = diff_bc;
+  v[0] = v[0] + diff_bc;
+  v[1] = v[2];
+
+  /*
+  cout << "ans: " <<  ans << endl;
+  REP(i, 3) cout << v[i] << " ";
+  cout << endl;
+  */
+  
+  // == 1
+  if(diff_ab%2) ans += (v[1]-v[0]+1)/2 + 1;
+  else ans += (v[1]-v[0])/2;
+
+  cout << ans << endl;
   
   return 0;
 }

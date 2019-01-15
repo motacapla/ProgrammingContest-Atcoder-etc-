@@ -21,6 +21,9 @@
 #include <cstdlib>
 #include <ctime>
 #include <climits>
+#include <iomanip>
+#include<string.h>
+
 #define REP(i, n) for(int i = 0; i < (int)(n); i++)
 #define FOR(i, j, k) for(int i = (int)(j); i < (int)(k); ++i)
 #define ROF(i, j, k) for(int i = (int)(j); i >= (int)(k); --i)
@@ -44,10 +47,34 @@ priority_queue<int, vector<int>, greater<int> > q_ascending;
 
 int
 main(void){  
-  int n;
-  string s;
-  cin >> n >> s;
-    
+  ios_base::sync_with_stdio(false);
+  string s, l="", r="keyence";
+  int itr = 0;
+  cin >> s;
+
+  while(true){
+    l += r[0];
+    REP(j, r.size()-1) r[j] = r[j+1];
+    r.pop_back();
+    //cout << l << " " << r << endl;
+    if(s.find(l) == string::npos || s.find(r) == string::npos) {
+      itr++;
+      if(itr >= 7) {cout << "NO" << endl; return 0;}
+    }
+    else{
+      
+      //cout << s.find(l) << " " << s.rfind(r) << endl;
+      if((s.find(l) == 0 &&  s.rfind(r) + r.size() == s.size()) || (s.rfind(r) == s.find(l) + l.size() && (s.find(l) == 0 || s.rfind(r) + r.size() == s.size()) ) ){
+	cout << "YES" << endl; return 0;
+      }
+      else{
+	itr++;
+	if(itr >= 7) {cout << "NO" << endl; return 0;}	
+      }
+    }
+  }
+
+ 
   
   return 0;
 }

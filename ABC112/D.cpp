@@ -42,12 +42,29 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 priority_queue<int> q_descending;
 priority_queue<int, vector<int>, greater<int> > q_ascending;
 
+vector<ll> pn;
+
+int solve(int n, int m){
+  int ans = 0;
+  for(int i=1; i*i <= m; i++){
+    if(m % i == 0){
+      if(i <= m/n) ans = std::max(ans, i); // 通常通りの約数(i)  m:16, i:2, m/i:8
+      if((m/i) <= (m/n)) ans = std::max(ans, m/i); // もう片側の約数(m/i)  
+    }
+  }
+  return ans;
+}
+
 int
 main(void){  
+  ios_base::sync_with_stdio(false);
+
   int n;
-  string s;
-  cin >> n >> s;
-    
+  int m;
+  cin >> n >> m;
+
+  int ans = solve(n, m);
+  cout << ans << endl;
   
   return 0;
 }

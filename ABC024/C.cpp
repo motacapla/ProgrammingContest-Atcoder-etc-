@@ -21,6 +21,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <climits>
+#include <iomanip>
+
 #define REP(i, n) for(int i = 0; i < (int)(n); i++)
 #define FOR(i, j, k) for(int i = (int)(j); i < (int)(k); ++i)
 #define ROF(i, j, k) for(int i = (int)(j); i >= (int)(k); --i)
@@ -42,12 +44,52 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 priority_queue<int> q_descending;
 priority_queue<int, vector<int>, greater<int> > q_ascending;
 
+ll l[100000], r[100000];
+int s[101], t[101];
+
 int
 main(void){  
-  int n;
-  string s;
-  cin >> n >> s;
-    
+  ios_base::sync_with_stdio(false);
+
+  int n, d, k;
+  cin >> n >> d >> k;
+
+  REP(i, d) cin >> l[i] >> r[i];
+  REP(i, k) cin >> s[i] >> t[i];
+
+  REP(i, k){
+    int ans = 0;
+    //昇順
+    if(s[i] < t[i]){
+      REP(j, d){
+	//現在地が範囲内ならば、可能な限り右へ移動
+	if(l[j] <= s[i] && s[i] <= r[j]){
+	  s[i] = r[j];
+	  //目的地についた
+	  if(s[i] >= t[i]){
+	    ans = j+1;
+	    cout << ans << endl;
+	    break;
+	  }
+	}	
+      }
+    }
+    //降順
+    else{
+      REP(j, d){
+	//現在地が範囲内ならば、可能な限り左へ移動	
+	if(l[j] <= s[i] && s[i] <= r[j]){
+	  s[i] = l[j];
+	  //目的地についた
+	  if(s[i] <= t[i]){
+	    ans = j+1;
+	    cout << ans << endl;
+	    break;
+	  }
+	}	
+      }
+    }
+  }
   
   return 0;
 }

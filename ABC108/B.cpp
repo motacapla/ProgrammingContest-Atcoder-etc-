@@ -44,10 +44,17 @@ priority_queue<int, vector<int>, greater<int> > q_ascending;
 
 int
 main(void){  
-  int n;
-  string s;
-  cin >> n >> s;
-    
+  ios_base::sync_with_stdio(false);
+
+  int x1, y1, x2, y2;
+  cin >> x1 >> y1 >> x2 >> y2;
+  //int diff = (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1);
+  //cout << x2-diff << " " << y2 << " " << x1-diff << " " << y1 << endl;
+
+  int diff_x = x2-x1;
+  int diff_y = y2-y1;
+
+  cout << x2-diff_y << " " << y2+diff_x << " " << x1-diff_y << " " << y1+diff_x << endl;
   
   return 0;
 }

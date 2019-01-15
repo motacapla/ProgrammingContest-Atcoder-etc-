@@ -44,10 +44,22 @@ priority_queue<int, vector<int>, greater<int> > q_ascending;
 
 int
 main(void){  
-  int n;
+  ios_base::sync_with_stdio(false);
+
   string s;
-  cin >> n >> s;
-    
+  cin >> s;
+
+  ll ans = 0LL;
+
+  bool zero = false;  
+  REP(i, s.size()){
+    if(s[i] == '0') zero = true;
+    if(s[i] == '+' || i==s.size()-1){
+      if(!zero)ans++;
+      zero = false;
+    }
+  }
+  cout << ans << endl;
   
   return 0;
 }

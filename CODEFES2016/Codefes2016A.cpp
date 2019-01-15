@@ -21,6 +21,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <climits>
+#include <iomanip>
+
 #define REP(i, n) for(int i = 0; i < (int)(n); i++)
 #define FOR(i, j, k) for(int i = (int)(j); i < (int)(k); ++i)
 #define ROF(i, j, k) for(int i = (int)(j); i >= (int)(k); --i)
@@ -42,12 +44,23 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 priority_queue<int> q_descending;
 priority_queue<int, vector<int>, greater<int> > q_ascending;
 
+string s[30][30];
+
 int
 main(void){  
-  int n;
-  string s;
-  cin >> n >> s;
+  ios_base::sync_with_stdio(false);
+
+  int h, w;
+  cin >> h >> w;
     
+  REP(i, h) REP(j, w) cin >> s[i][j];
+
+  int ax, ay;
+  REP(i, h) REP(j, w) if(s[i][j] == "snuke") { ax = i; ay = j; break;}
+
+  char stmp = 'A';
+  stmp = stmp + ay;
+  cout << stmp << ax+1 << endl;
   
   return 0;
 }

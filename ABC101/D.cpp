@@ -42,12 +42,42 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 priority_queue<int> q_descending;
 priority_queue<int, vector<int>, greater<int> > q_ascending;
 
+ll array[100];
+
+ll digits(ll n){
+  int ans=0;
+  while(n){
+    ans += n%10;
+    n /= 10;
+  }
+  return ans;
+}
+
+bool compare(ll x, ll y){
+  return digits(y)*x <= y*digits(x);
+}
+
 int
 main(void){  
-  int n;
-  string s;
-  cin >> n >> s;
-    
+  ios_base::sync_with_stdio(false);
+
+  ll k;
+  cin >> k;  
+  
+  ll d = 1, cur = 0;
+
+  REP(i, k){
+    ll x = cur + d, y = cur + d * 10;
+    if(compare(x, y)){
+      cur = x;
+    }
+    else{
+      cur = y;
+      d *= 10;      
+    }
+    cout << cur << endl;
+  }
+  
   
   return 0;
 }
