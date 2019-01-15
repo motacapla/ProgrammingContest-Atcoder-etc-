@@ -44,13 +44,13 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 priority_queue<int> q_descending;
 priority_queue<int, vector<int>, greater<int> > q_ascending;
 
-string ans[30];
+string ans[40];
 
 int
 main(void){  
   ios_base::sync_with_stdio(false);
 
-  int n;
+  ll n;
   cin >> n;
 
   string s = "123456";
@@ -64,9 +64,9 @@ main(void){
     }   
   }
 
-  //REP(i, 30) cout << ans[i] << endl;
-
-  cout << ans[n-1] << endl;
+  //REP(i, 30) cout << ans[i] << endl;  
+  if(n == 0) cout << s << endl;
+  else cout << ans[n-1] << endl;
   
   return 0;
 }
