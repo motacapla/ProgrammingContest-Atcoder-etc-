@@ -37,6 +37,7 @@ ll MUL(ll x, ll y) { return x*y % MOD; }
 ll POW(ll x, ll e) { ll v=1; for(; e; x=MUL(x,x), e>>=1) if (e&1) v = MUL(v,x); return v; }
 ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 
+bool debug = true;
 ll nl, nm;
 
 int
@@ -65,12 +66,13 @@ main(void){
   while(k>0){
     int opt = s.find(v[vitr]);    
     int cur = s.find(s[vitr]);
-    cout << s << " " << opt << " " << cur << " k: " << k << endl;
+    if(debug) cout << "s: " << s << " " << opt << ":" << cur << " k: " << k << endl;
     if(opt != cur) {
       swap(s[opt], s[cur]);
       k--;
-      if(s[cur] != v[cur]) k--;      
-    }    
+    }
+    //if(s[cur] != v[cur]) k--;      
+    
     vitr++;
   }
   
