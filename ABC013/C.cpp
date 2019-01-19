@@ -48,25 +48,7 @@ main(void){
   cin >> n >> h;
   cin >> a >> b >> c >> d >> e;
 
-  ll x = 0LL;
-  ll y = 0LL;
   ll ans = INT_MAX;
-
-  ll hungry = h + x*b + y*d - (n-x-y) * e;
-  if(hungry > 0) {cout << "0" << endl; return 0;}
-
-  /*
-  ROF(i, n, 0){
-    ROF(x, n-i, 0){
-      ROF(y, n-x-i, 0){
-	if(i+x+y < n) continue;
-	//cout << i << " : " << x << " : " << y << endl;
-	hungry = h + x*b + y*d - (n-x-y) * e;
-	if(hungry > 0) ans = min(ans, x*a+y*c);
-      }
-    }
-  }
-  */
     
   REP(i, n+1){
     ll tmp, j;
