@@ -55,7 +55,7 @@ main(void){
   ll hungry = h + x*b + y*d - (n-x-y) * e;
   if(hungry > 0) {cout << "0" << endl; return 0;}
 
-  
+  /*
   ROF(i, n, 0){
     ROF(x, n-i, 0){
       ROF(y, n-x-i, 0){
@@ -66,8 +66,8 @@ main(void){
       }
     }
   }
-  
-  /*
+  */
+    
   REP(i, n+1){
     ll tmp, j;
     tmp = -i*(d+e)+e*n-h; //お腹が減る量
@@ -75,7 +75,7 @@ main(void){
     else j = tmp/(b+e)+1;
     if(i+j<=n) ans=min(ans, j*a+i*c);
   }
-  */
+ 
   cout << ans << endl;
   
   
