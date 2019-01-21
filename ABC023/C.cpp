@@ -56,10 +56,10 @@ main(void){
   cin >> r >> c >> k >> n;
   REP(i, n) {
     cin >> row[i] >> col[i];
-    //アメちゃんあたりの行or列数
+    //行or列あたりのアメちゃんの数      
     cnr[row[i]-1]++, cnc[col[i]-1]++;
   }
-  //行or列あたりのアメちゃんの数  
+  //アメちゃんあたりの行or列数  
   REP(i, r) mpr[cnr[i]]++;
   REP(i, c) mpc[cnc[i]]++;
 
