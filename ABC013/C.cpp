@@ -45,21 +45,26 @@ main(void){
   ios::sync_with_stdio(false);
 
   ll n, h, a, b, c, d, e;
-  cin >> n >> h;
-  cin >> a >> b >> c >> d >> e;
+  cin >> n >> h >> a >> b >> c >> d >> e;
 
   ll ans = INT_MAX;
-    
-  REP(i, n+1){
-    ll tmp, j;
-    tmp = -i*(d+e)+e*n-h; //お腹が減る量
-    if(tmp<0) j = 0;//減らない
-    else j = tmp/(b+e)+1;
-    if(i+j<=n) ans=min(ans, j*a+i*c);
+  ll tmp;
+  REP(x, n+1){
+    //h + x*b + y*d - (n-x-y)*e > 0
+    //y = 0
+    if(h+x*b-e*(n-x) > 0){
+      tmp = x*a;
+      ans = min(ans, tmp);
+    }
+    else{
+      //h + x*b + y*d - (n-x-y)*e > 0      
+      ll y = (e*(n-x)-h-b*x)/(d+e) + 1;
+      if(x+y <= n){
+	tmp = x*a + y*c;
+	ans = min(ans, tmp);
+      }
+    }
   }
- 
   cout << ans << endl;
-  
-  
   return 0;
 }
