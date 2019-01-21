@@ -42,13 +42,15 @@ int n, k;
 int t[7][7];
 bool f = false;
 
-// itr, val: t[][]
-void dfs(int itr, int val){
-  if(itr == n) {
-    if(val == 0) f = true;
+void dfs(int i, int v){
+  //cout << i << " " << v << endl;
+  if(i == n-1){
+    if(v == 0) f = true;
     return;
   }
-  REP(i, k) dfs(itr+1, val ^ t[itr][i]);  
+  REP(j, k){
+    dfs(i+1, v ^ t[i+1][j]);
+  }
 }
 
 int
@@ -58,7 +60,10 @@ main(void){
   cin >> n >> k;
   REP(i, n) REP(j, k) cin >> t[i][j];
 
-  dfs(0, 0);
+  REP(i, k){
+    dfs(0, t[0][i]);
+  }
   cout << (f ? "Found" : "Nothing") << endl;
+
   return 0;
 }
