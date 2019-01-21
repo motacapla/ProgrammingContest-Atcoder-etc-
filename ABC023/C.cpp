@@ -69,13 +69,22 @@ main(void){
   REP(i, k+1){
     ans += mpc[i] * mpr[k-i];
   }
-  
+
+  //座標にアメがある場合
   REP(i, n){
     r = cnr[row[i]-1] + cnc[col[i]-1];
+    //重複カウントで増えた分を消す
     if(r == k) ans--;
+    //重複カウントで正解だった分を増やす
     if(r == k+1) ans++;
   }
-    
+  /*
+     o
+     o
+    と
+     o
+    oo
+   */
   cout << ans << endl;
   
   return 0;
