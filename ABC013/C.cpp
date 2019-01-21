@@ -39,6 +39,8 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 
 ll nl, nm;
 
+// INT_MAX バグるからやめとく
+
 int
 main(void){  
   cin.tie(0);
@@ -47,24 +49,12 @@ main(void){
   ll n, h, a, b, c, d, e;
   cin >> n >> h >> a >> b >> c >> d >> e;
 
-  ll ans = INT_MAX;
-  ll tmp;
+  ll ans = a*n + c*n;
   REP(x, n+1){
-    //h + x*b + y*d - (n-x-y)*e > 0
-    //y = 0
-    if(h+x*b-e*(n-x) > 0){
-      tmp = x*a;
-      ans = min(ans, tmp);
-    }
-    else{
-      //h + x*b + y*d - (n-x-y)*e > 0      
-      ll y = (e*(n-x)-h-b*x)/(d+e) + 1;
-      if(x+y <= n){
-	tmp = x*a + y*c;
-	ans = min(ans, tmp);
-      }
-    }
+    ll y = max(0LL, ((n-x)*e-h-b*x+d+e)/(d+e));
+    ans = min(ans, a*x+c*y);
   }
   cout << ans << endl;
+  
   return 0;
 }
