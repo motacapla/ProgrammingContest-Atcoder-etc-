@@ -48,7 +48,6 @@ void dfs(int itr, int val){
     if(val == 0) f = true;
     return;
   }
-  //cout << "itr:" << itr << " val:" << val << endl;
   REP(i, k) dfs(itr+1, val ^ t[itr][i]);  
 }
 
