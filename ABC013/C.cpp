@@ -51,7 +51,7 @@ main(void){
 
   ll ans = a*n + c*n;
   REP(x, n+1){
-    ll y = max(0LL, ((n-x)*e-h-b*x+d+e)/(d+e));
+    ll y = max(0LL, ((n-x)*e-h-b*x+d+e)/(d+e)); //ｙとれるだけとる
     ans = min(ans, a*x+c*y);
   }
   cout << ans << endl;
