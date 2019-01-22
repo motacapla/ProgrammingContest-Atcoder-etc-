@@ -50,6 +50,9 @@ int a[100];
 bool debug = false;
 
 /*
+//int ans = -1e8;
+//実装できなかった...
+
 int calc(int l, int r){
   int takahashi = 0, aoki = 0;
   
