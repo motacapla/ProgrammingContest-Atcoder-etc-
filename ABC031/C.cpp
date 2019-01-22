@@ -52,23 +52,17 @@ bool debug = false;
 /*
 int calc(int l, int r){
   int takahashi = 0, aoki = 0;
-
-  int sum[n], sum_aoki = 0, sum_itr = 0;
-  REP(i, n) sum[i] = 0;
-  for(int i=l, j=0; i<n; i+=2, j++){
-    sum[j+1] += sum[j] + a[i+1];
-    if(sum_aoki < sum[j+1]){
-      sum_aoki = sum[j+1];
-      sum_itr = j;
+  
+  for(int i=l; i<abs(r-l)+1; i++){
+    if(f){
+      takahashi += a[i];
+      f = false;
+    }else{
+      aoki += a[i];
+      f = true;
     }
   }
-  if(debug)cout << sum_itr << endl;
-  
-  for(int i=l; i<l+2*sum_itr; i+=2){
-    takahashi += a[i];
-    aoki += a[i+1];
-  }
-  if(debug) cout << "l: " << l << " r: " << r << " takahashi: " << takahashi <<  " aoki: " << aoki << endl;
+  //if(debug) cout << "l: " << l << " r: " << r << " takahashi: " << takahashi <<  " aoki: " << aoki << endl;
   return takahashi;
 }
 */
