@@ -68,7 +68,6 @@ main(void){
     if(!s4_f) s.erase(s.size()-s4.size(),s.size());
     i = s.size()-1;
   }
-
   cout << "YES" << endl;
   
   return 0;
