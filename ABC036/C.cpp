@@ -1,3 +1,5 @@
+//$g++ -std=c++11 Template.cpp 
+
 //#include <bits/stdc++.h>
 #include <iostream>
 #include <complex>
@@ -19,6 +21,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <climits>
+#include <iomanip>
+
 #define REP(i, n) for(int i = 0; i < (int)(n); i++)
 #define FOR(i, j, k) for(int i = (int)(j); i < (int)(k); ++i)
 #define ROF(i, j, k) for(int i = (int)(j); i >= (int)(k); --i)
@@ -37,33 +41,37 @@ ll MUL(ll x, ll y) { return x*y % MOD; }
 ll POW(ll x, ll e) { ll v=1; for(; e; x=MUL(x,x), e>>=1) if (e&1) v = MUL(v,x); return v; }
 ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 
-ll nl, nm;
-int n, k;
-int t[7][7];
-bool f = false;
+priority_queue<int> q_descending;
+priority_queue<int, vector<int>, greater<int> > q_ascending;
 
-void dfs(int i, int v){
-  //cout << i << " " << v << endl;
-  if(i == n-1){
-    if(v == 0) f = true;
-    return;
-  }
-  REP(j, k){
-    dfs(i+1, v ^ t[i+1][j]);
-  }
-}
+//バグる
+//map<int, int> mp;
+//int val[100000009];
+//vector<int> vtmp;
+
+int n;
+P a[575777];
+int ans[575777];
 
 int
 main(void){  
-  cin.tie(0);
-  ios::sync_with_stdio(false);
-  cin >> n >> k;
-  REP(i, n) REP(j, k) cin >> t[i][j];
+  ios_base::sync_with_stdio(false);
 
-  REP(i, k){
-    dfs(0, t[0][i]);
+  cin >> n;
+  REP(i, n){
+    cin >> a[i].first;
+    a[i].second = i;
   }
-  cout << (f ? "Found" : "Nothing") << endl;
-
+  sort(a, a+n);
+  int c = 0, d = a[0].first;
+  REP(i, n){
+    if(d < a[i].first) c++;
+    ans[a[i].second] = c;
+    d = a[i].first;
+  }
+  
+  REP(i, n) cout << ans[i] << endl;
+ 
+  
   return 0;
 }

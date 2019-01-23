@@ -40,62 +40,65 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 bool debug = true;
 ll nl, nm;
 
+int res = 0;
+int size = 0;
+map<char, int> u, w;
+int n, k;
+string s = "";
+string t = "";
+
+bool is_ok(int k){
+  int r = 0;
+  for(char i='a'; i<='z'; i++) r += min(u[i],w[i]);
+  return size-r <= k;
+}
+
 int
 main(void){  
   cin.tie(0);
   ios::sync_with_stdio(false);
 
-  int n, k;
-  string s;
 
   cin >> n >> k;
   cin >> s;
 
-  vector<char> v;
-  REP(i, s.size()) v.push_back(s[i]);
-  sort(v.begin(),v.end());  
+  vector<char> v, t;
+  REP(i, n) v.push_back(s[i]);
+  sort(v.begin(), v.end(), greater<char>());
 
-  int cnt = 0;
-  REP(i, v.size()){
-    if(v[i] != s[i]) cnt++;
+  while(res < s.size()){
+    ROF(i, v.size()-1, 0){
+      if(s[res] != v[i]){
+	u[s[res]]++;
+	w[v[i]]++;
+	size++;
+	k--;
+	if(is_ok(k)){
+	  res++;
+	  t.push_back(v[i]);
+	  v.erase(v.begin()+i);
+	  break;
+	}
+	else{
+	  size--;
+	  u[s[res]]--;
+	  w[v[i]]--;
+	  k++;
+	}
+      }
+      else{
+	if(is_ok(k)){
+	  res++;
+	  t.push_back(v[i]);
+	  v.erase(v.begin()+i);
+	  break;
+	}
+      }
+    }
   }
-  if(k > cnt) {REP(i, v.size()) {cout << v[i];} cout << endl; return 0;}
 
-  int vitr = 0;  
-  //REP(i, s.size()){
-  while(k>0){
-    int opt = s.find(v[vitr]);    
-    int cur = s.find(s[vitr]);
-    if(debug) cout << "s: " << s << " " << opt << ":" << cur << " k: " << k << endl;
-    if(opt != cur) {
-      swap(s[opt], s[cur]);
-      k--;
-    }
-    //if(s[cur] != v[cur]) k--;      
-    
-    vitr++;
-  }
-  
-  cout << s << endl;
-  
-  /*
-  string l="", r="";
-  REP(i, k) l += v[i];
-  FOR(i, k, s.size()) r += v[i];
-  */
-  
-  /*
-  int cnt = k;
-  REP(j, l.size()){
-    if(l[j] != s[j]){
-      //swap(l.find(l[j]), l.find(s[j]));
-      cout << l.find(l[j]) << " " << l.find(s[j]) << endl;
-      cnt-=2;
-    }
-    if(cnt == 0) break;
-  }
-  cout << l << r << endl;
-  */
+  REP(i, t.size()) cout << t[i];
+  cout << endl;
   
   return 0;
 }

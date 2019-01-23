@@ -39,27 +39,22 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 
 ll nl, nm;
 
+// INT_MAX バグるからやめとく
+
 int
 main(void){  
   cin.tie(0);
   ios::sync_with_stdio(false);
 
   ll n, h, a, b, c, d, e;
-  cin >> n >> h;
-  cin >> a >> b >> c >> d >> e;
+  cin >> n >> h >> a >> b >> c >> d >> e;
 
-  ll ans = INT_MAX;
-    
-  REP(i, n+1){
-    ll tmp, j;
-    tmp = -i*(d+e)+e*n-h; //お腹が減る量
-    if(tmp<0) j = 0;//減らない
-    else j = tmp/(b+e)+1;
-    if(i+j<=n) ans=min(ans, j*a+i*c);
+  ll ans = a*n + c*n;
+  REP(x, n+1){
+    ll y = max(0LL, ((n-x)*e-h-b*x+d+e)/(d+e)); //ｙとれるだけとる
+    ans = min(ans, a*x+c*y);
   }
- 
   cout << ans << endl;
-  
   
   return 0;
 }
