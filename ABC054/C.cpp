@@ -1,5 +1,3 @@
-//$g++ -std=c++11 Template.cpp 
-
 //#include <bits/stdc++.h>
 #include <iostream>
 #include <complex>
@@ -39,36 +37,61 @@ ll MUL(ll x, ll y) { return x*y % MOD; }
 ll POW(ll x, ll e) { ll v=1; for(; e; x=MUL(x,x), e>>=1) if (e&1) v = MUL(v,x); return v; }
 ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 
-priority_queue<int> q_descending;
-priority_queue<int, vector<int>, greater<int> > q_ascending;
+ll nl, nm;
 
-int D[31][31];
-int c[501][501];
-int cnt[3][31];
+int mat[10][10];
+ll ans = 0LL;
 
 int
 main(void){  
-  ios_base::sync_with_stdio(false);
+  cin.tie(0);
+  ios::sync_with_stdio(false);
 
-  int N, C;
-  cin >> N >> C;
-  REP(i, C) REP(j, C) cin >> D[i][j];
-  REP(i, N) REP(j, N) cin >> c[i][j];
+  int n, m;
+  cin >> n >> m;
+  REP(i, m){
+    int a, b;
+    cin >> a >> b;
+    a--; b--;
+    mat[a][b] = mat[b][a] = 1;
+  }
 
-  REP(i, N) REP(j, N) cnt[(i+j+2)%3][c[i][j]-1]++;
-
-  //cout << cnt[0] << " vs " << cnt[1] << " vs " << cnt[2] << endl;
-
-  int ans = 1 << 30;  
-  REP(i, C) REP(j, C) if(i != j) REP(k, C) if(i != k && j != k) {
-      int tmp = 0;
-      REP(l, C) tmp += D[l][i] * cnt[0][l];
-      REP(l, C) tmp += D[l][j] * cnt[1][l];
-      REP(l, C) tmp += D[l][k] * cnt[2][l];
-      if(tmp < ans) ans=tmp;
+  //next_permutationで全探索
+  vector<int> v(n-1);
+  FOR(i, 1, n) v[i-1] = i;
+  sort(v.begin(), v.end());
+  while(next_permutation(v.begin(), v.end())){
+    int now = 0;
+    //辿れるだけたどり、全部訪れることができたら ans++
+    REP(i, v.size()){
+      if(mat[now][v[i]] == 0) break;
+      now = v[i];
+      if(i == v.size()-1) ans++;
     }
-
+  }
   cout << ans << endl;
-  
   return 0;
 }
+
+  /*
+  //要はDPで最長経路の数が何本あるか求める、ということ?
+  dp[0] = 1;
+  queue<int> q;
+  q.push(0);
+  int cur;
+  while(!q.empty()){
+    cur = q.front(); q.pop();
+    if(!visited[cur]){
+      visited[cur] = true;
+      REP(i, n) {
+	if(mat[i][cur] > 0 && !visited[i]) {
+	  q.push(i);
+	  dp[i] = dp[cur]+1;
+	}
+      }
+    }
+    //cout << cur << endl;
+  }
+
+  cout << dp[cur]-1 << endl;
+  */
