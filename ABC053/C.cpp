@@ -46,14 +46,12 @@ main(void){
 
   ll x;
   cin >> x;
-  if(x < 6) {cout << "1" << endl; return 0;}
-  else if(x < 11) {cout << "2" << endl; return 0;}
   ll ans = 0LL;
   ll t1 = x/11;
   ll t2 = x%11;
   ans = 2*t1;  
   if(0 < t2 && t2 <= 6) ans++;
-  else ans+=2;
+  else if(7 <= t2 && t2 <= 10) ans+=2;
 
   cout << ans << endl;
   
