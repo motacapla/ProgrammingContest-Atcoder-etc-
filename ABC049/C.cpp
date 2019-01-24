@@ -46,6 +46,7 @@ main(void){
 
   string s;
   cin >> s;
+
   string s1 = "dream";
   string s2 = "dreamer";
   string s3 = "erase";
@@ -55,12 +56,13 @@ main(void){
   int i = s.size()-1;      
   while(s.size() > 0){
     s1_f=false, s2_f=false, s3_f=false, s4_f=false;
-    REP(j, 3){
+    REP(j, s1.size()){
       if(s1[s1.size()-1-j] != s[i-j]) s1_f = true;
-      if(s2[s2.size()-1-j] != s[i-j]) s2_f = true;
-      if(s3[s3.size()-1-j] != s[i-j]) s3_f = true;
-      if(s4[s4.size()-1-j] != s[i-j]) s4_f = true;      
+      if(s3[s3.size()-1-j] != s[i-j]) s3_f = true;      
     }
+    REP(j, s2.size()) if(s2[s2.size()-1-j] != s[i-j]) s2_f = true;
+    REP(j, s4.size()) if(s4[s4.size()-1-j] != s[i-j]) s4_f = true;      
+    
     if(s1_f && s2_f && s3_f && s4_f){cout << "NO" << endl; return 0;}
     if(!s1_f) s.erase(s.size()-s1.size(),s.size());
     if(!s2_f) s.erase(s.size()-s2.size(),s.size());
@@ -69,6 +71,6 @@ main(void){
     i = s.size()-1;
   }
   cout << "YES" << endl;
-  
+
   return 0;
 }
