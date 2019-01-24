@@ -48,41 +48,17 @@ main(void){
   cin >> n >> x;
   REP(i, n) cin >> a[i];
 
-  REP(i, n) aa[i] = a[i];
-  
   ll ans = 0LL;
-
-  //n: odd
-  for(int i=1; i<n; i+=2){
-    int left = a[i-1]+a[i];
-    if(left > x) {
-      ans += left-x;
-      a[i] -= left-x;
-    }
-    int right = a[i]+a[i+1];
-    if(right > x) {
-      ans += right-x;
-      a[i] -= right-x;		  
-    }
+  if(a[0] > x){
+    ans += (a[0]-x);
+    a[0] = x;
   }
-  //n: even
-  if(n%2 == 0){
-    ll a2=0LL;
-    for(int i=0; i<n; i+=2){
-      if(i > 0){
-	int left = a[i-1]+aa[i];      
-	if(left > x) {
-	  a2 += left-x;
-	  aa[i] -= left-x;
-	}
-      }
-      int right = a[i] + aa[i+1];
-      if(right > x) {
-	a2 += right-x;
-	aa[i] -= right-x;	
-      }
-    }    
-    ans = min(ans, a2);
+
+  FOR(i,1,n){
+    if( (a[i-1]+a[i]) > x){
+      ans += (a[i]+a[i-1]-x);
+      a[i] = x - a[i-1];
+    }
   }
 
   cout << ans << endl;
