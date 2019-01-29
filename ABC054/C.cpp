@@ -19,6 +19,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <climits>
+#include <bitset>
+
 #define REP(i, n) for(int i = 0; i < (int)(n); i++)
 #define FOR(i, j, k) for(int i = (int)(j); i < (int)(k); ++i)
 #define ROF(i, j, k) for(int i = (int)(j); i >= (int)(k); --i)
@@ -37,17 +39,33 @@ ll MUL(ll x, ll y) { return x*y % MOD; }
 ll POW(ll x, ll e) { ll v=1; for(; e; x=MUL(x,x), e>>=1) if (e&1) v = MUL(v,x); return v; }
 ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 
-ll nl, nm;
-
+int n, m;
 int mat[10][10];
+bool visited[10];
 ll ans = 0LL;
+
+int dfs(int s){
+  bool f = true;
+  REP(i, n) if(!visited[i]) f = false;
+  if(f) return 1;
+
+  int ret = 0;
+  REP(i, n){
+    if(mat[s][i] && !visited[i]){
+      //true-falseの出入りマン
+      visited[i]=true;
+      ret += dfs(i);
+      visited[i]=false;
+    }
+  }
+  return ret;
+}
 
 int
 main(void){  
   cin.tie(0);
   ios::sync_with_stdio(false);
 
-  int n, m;
   cin >> n >> m;
   REP(i, m){
     int a, b;
@@ -56,42 +74,27 @@ main(void){
     mat[a][b] = mat[b][a] = 1;
   }
 
-  //next_permutationで全探索
-  vector<int> v(n-1);
-  FOR(i, 1, n) v[i-1] = i;
-  sort(v.begin(), v.end());
-  while(next_permutation(v.begin(), v.end())){
-    int now = 0;
-    //辿れるだけたどり、全部訪れることができたら ans++
-    REP(i, v.size()){
-      if(mat[now][v[i]] == 0) break;
-      now = v[i];
-      if(i == v.size()-1) ans++;
-    }
-  }
-  cout << ans << endl;
+  visited[0] = true;
+  cout << dfs(0) << endl;
+  
   return 0;
 }
 
   /*
-  //要はDPで最長経路の数が何本あるか求める、ということ?
-  dp[0] = 1;
-  queue<int> q;
-  q.push(0);
-  int cur;
-  while(!q.empty()){
-    cur = q.front(); q.pop();
-    if(!visited[cur]){
-      visited[cur] = true;
-      REP(i, n) {
-	if(mat[i][cur] > 0 && !visited[i]) {
-	  q.push(i);
-	  dp[i] = dp[cur]+1;
+  //解けなかった
+  REP(bit, (1<<n)){ //bitDP
+    bool visited[n];
+    REP(j, n) visited[j] = false;
+    REP(j, n){
+      if(!(bit%2)) continue;
+      if(bit & (1<<j)){ //bitのj番目のビットが立つ
+	//cout << bitset<8>(bit) << endl;
+	REP(k, n){
+	  if((bit & (1<<k)) && mat[j][k] == 1 && !visited[k]){
+	    visited[k] = true;
+	  }	  
 	}
       }
     }
-    //cout << cur << endl;
   }
-
-  cout << dp[cur]-1 << endl;
   */
