@@ -36,52 +36,50 @@ ll MUL(ll x, ll y) { return x*y % MOD; }
 ll POW(ll x, ll e) { ll v=1; for(; e; x=MUL(x,x), e>>=1) if (e&1) v = MUL(v,x); return v; }
 ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 
-uintmax_t combination(unsigned int n, unsigned int r) {
-  if ( r * 2 > n ) r = n - r;
-  uintmax_t dividend = 1;
-  uintmax_t divisor  = 1;
-  for ( unsigned int i = 1; i <= r; ++i ) {
-    dividend *= (n-i+1);
-    divisor  *= i;
-  }
-  return dividend / divisor;
-}
+//解説AC
+//https://atcoder.jp/contests/abc044/submissions/4119290
 
-int
-main(void){  
+int main(void){
+  ios::sync_with_stdio(false);
+  cin.tie(0);
   int n, a;
-  int x[51] = {};
-  ll ans = 0LL;  
-  int m_x = 0;
   cin >> n >> a;
-
-  REP(i, n) {
-    cin >> x[i];
-    if(m_x < x[i]) m_x = x[i];
+  ll dp[51][2501] = {};
+  dp[0][0] = 1;
+  REP(i, n){
+    int x;
+    cin >> x;
+    ROF(j, 50, 1) ROF(k, 2500-x, 0) dp[j][k+x] += dp[j-1][k]; //まとめて数え上げる
   }
-  int n_x[51] = {};
-    
-  REP(i, n) ++n_x[x[i]-1];
-    
-  int n_a = n_x[a-1];
-
-  cout << n_a << endl;
-
-  ans += pow(2, n_a) -1;
-  
-  cout << "a : " << ans << endl;
-  
-  int l = a-1, r = a+1;
-  while(l >= 1 && r <= m_x){
-    cout << "l,r = " << l << " " << r << endl;
-    int n_l=n_x[l-1], n_r=n_x[r-1];
-    ans += n_l * n_r * (1<<n_a);
-    l--;
-    r++;
-    cout << "a : " << ans << endl;    
-  }
-
+  ll ans = 0LL;
+  FOR(i, 1, n+1) ans += dp[i][i*a]; //a, 2a, 3a, ... / i
   cout << ans << endl;
-  
   return 0;
 }
+
+/*
+int x[575];
+int xx[575];
+
+int main(void){
+  int n,a,m=0;
+  cin >> n >> a;
+  REP(i, n) {
+    cin >> x[i];
+    xx[x[i]]++;
+    m = max(m, x[i]);
+  }
+  ll ans = 0LL;
+  int aa = xx[a];
+  ans += pow(2, aa) - 1; //2^a - 1
+  int l=a-1, r=a+1;
+  while(1 <= l && r <= m){
+    int ln = xx[l], lr = xx[r];
+    ans += ln*lr*(1<<aa);
+    l--;
+    r++;
+  }
+  cout << ans << endl;
+  return 0;
+}
+*/
