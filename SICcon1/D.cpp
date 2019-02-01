@@ -19,6 +19,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <climits>
+#include <bitset>
 #define REP(i, n) for(int i = 0; i < (int)(n); i++)
 #define FOR(i, j, k) for(int i = (int)(j); i < (int)(k); ++i)
 #define ROF(i, j, k) for(int i = (int)(j); i >= (int)(k); --i)
@@ -40,10 +41,10 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 ll nl, nm;
 ll a[10000001];
 
-map<ll,ll> mp;
-vector<set<ll>> vs(100001);
-
-// vs -> multisetで書き直しするか
+set<int> vs, vst, res;
+//TLEったのでmultisetで書き直しした -> TLEった -> bitでやるか.. -> WA
+//多分, 表現範囲を超えている? 10^6だし
+//ll bit, bitt;
 
 int
 main(void){  
@@ -53,48 +54,37 @@ main(void){
   ll n, m;
   cin >> n >> m;
   REP(i, m) cin >> a[i];
-
-  ll r = 0LL, minlen = 1e8+1;
-  ll sum = 0LL, vitr = 0LL;;
+  bool f = false;
+  ll minlen = 1e9+1, sum = 0LL;
+  int r = 0;
   REP(l, m){    
     while(r < m && sum < n){
       sum += a[r];
       r++;
     }
-    if(minlen >= r-l && sum >= n){
-      //check
-      //cout << "l: " << l << " r: " << r << " sum: " << sum << " minlen: " << minlen << endl;      
+    if(minlen > r-l && sum >= n){      
       minlen = r-l;
-      FOR(i, l, r){
-	vs[vitr].insert(i);
-      }
-      vitr++;
+      vs.clear(); vst.clear();
+      vs.insert(l); vst.insert(r);
+      //bit = 0;      
+      //FOR(i, l, r) bit |= (1<<i);
+      //cout << "bit: " << bitset<10>(bit) << " bitt:" << bitset<10>(bitt) << endl;            
+    }
+    else if(minlen == r-l && sum >= n){
+      //bitt = 0;
+      //FOR(i, l, r) bitt |= (1<<i);
+      //bit = bit & bitt;
+      //cout << "bit: " << bitset<10>(bit) << " bitt:" << bitset<10>(bitt) << endl;
+      vs.insert(l);
+      vst.insert(r);
     }
     if(l == r) r++;
-    else sum -= a[l];
+    else sum -= a[l];    
   }
+  //cout << __builtin_popcount(bit) << endl;
 
-  multiset<int> aa, tmp, res;
-  int f = 0;
-  bool flag = false;
-
-  REP(i, vitr){
-    if(minlen != vs[i].size()) continue;//vs[i].clear(); //いらないやつは消す
-    else {
-      tmp.clear();
-      res.clear();
-      for(auto itr=vs[i].begin(); itr!=vs[i].end(); itr++) {
-	tmp.insert(*itr);       
-      }
-      f++;
-      flag = true;
-    }
-    if(f == 1) aa = tmp;
-    if(flag) set_intersection(aa.begin(), aa.end(), tmp.begin(), tmp.end(), inserter(res, res.end()));
-    flag = false;
-  }
-  if(f == 1) res = aa;
-  cout << res.size() << endl;
+  if(vs.size()) cout << max(0, *vst.begin() - *vs.rbegin()) << endl;
+  else cout << "0" << endl;
   
   return 0;
 }
