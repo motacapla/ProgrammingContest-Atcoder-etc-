@@ -19,7 +19,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <climits>
-#include <bitset>
 #define REP(i, n) for(int i = 0; i < (int)(n); i++)
 #define FOR(i, j, k) for(int i = (int)(j); i < (int)(k); ++i)
 #define ROF(i, j, k) for(int i = (int)(j); i >= (int)(k); --i)
@@ -39,52 +38,44 @@ ll POW(ll x, ll e) { ll v=1; for(; e; x=MUL(x,x), e>>=1) if (e&1) v = MUL(v,x); 
 ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 
 ll nl, nm;
-ll a[10000001];
 
-set<int> vs, vst, res;
-//TLEったのでmultisetで書き直しした -> TLEった -> bitでやるか.. -> WA
-//多分, 表現範囲を超えている? 10^6だし
-//ll bit, bitt;
+vector<int> a;
+int cnt[200001];
 
 int
 main(void){  
   cin.tie(0);
   ios::sync_with_stdio(false);
 
-  ll n, m;
-  cin >> n >> m;
-  REP(i, m) cin >> a[i];
-  bool f = false;
-  ll minlen = 1e9+1, sum = 0LL;
-  int r = 0;
-  REP(l, m){    
-    while(r < m && sum < n){
-      sum += a[r];
-      r++;
-    }
-    if(minlen > r-l && sum >= n){      
-      minlen = r-l;
-      vs.clear(); vst.clear();
-      vs.insert(l); vst.insert(r);
-      //bit = 0;      
-      //FOR(i, l, r) bit |= (1<<i);
-      //cout << "bit: " << bitset<10>(bit) << " bitt:" << bitset<10>(bitt) << endl;            
-    }
-    else if(minlen == r-l && sum >= n){
-      //bitt = 0;
-      //FOR(i, l, r) bitt |= (1<<i);
-      //bit = bit & bitt;
-      //cout << "bit: " << bitset<10>(bit) << " bitt:" << bitset<10>(bitt) << endl;
-      vs.insert(l);
-      vst.insert(r);
-    }
-    if(l == r) r++;
-    else sum -= a[l];    
+  int n, k;
+  cin >> n >> k;
+  REP(i, n) {
+    int tmp;
+    cin >> tmp;
+    a.push_back(tmp);
+    cnt[tmp]++;
   }
-  //cout << __builtin_popcount(bit) << endl;
 
-  if(vs.size()) cout << max(0, *vst.begin() - *vs.rbegin()) << endl;
-  else cout << "0" << endl;
+  //REP(i, n+1) cout << cnt[i] << endl;  
+  
+  int kinds = 0;
+  FOR(i, 1, n+1) if(cnt[i]) kinds++;
+  if(kinds <= k){cout << 0 << endl; return 0;}
+
+  sort(cnt, cnt+n+1);
+
+  //REP(i, n+1) cout << cnt[i] << endl;
+  
+  ll ans = 0LL;
+  FOR(i, 1, n+1){
+    if(cnt[i]){
+      ans += cnt[i];
+      kinds--;
+      if(kinds <= k) break;
+    }
+  }
+
+  cout << ans << endl;
   
   return 0;
 }
