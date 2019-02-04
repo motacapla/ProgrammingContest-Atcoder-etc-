@@ -1,5 +1,5 @@
 //$g++ -std=c++11 Template.cpp 
-
+ 
 //#include <bits/stdc++.h>
 #include <iostream>
 #include <complex>
