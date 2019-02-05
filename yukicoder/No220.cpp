@@ -62,7 +62,7 @@ ll calc(string s){
   }
   ll ans = 0LL;
   //ここがわからんかった... 
-  //ans = dp[n][0][0] + dp[n][0][1] + dp[n][1][1] + dp[n][2][1];  
+  ans = dp[n][0][0] + dp[n][0][1] + dp[n][1][1] + dp[n][2][1];  
   return ans;
 }
 
