@@ -44,44 +44,43 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 priority_queue<int> q_descending;
 priority_queue<int, vector<int>, greater<int> > q_ascending;
 
-int n,m;
+
 int g[20][20];
+ll dp[1<<20];
 
 int
-main(void){  
-  ios_base::sync_with_stdio(false);
-
+main(void){
+  int n, m, x, y;  
   cin >> n >> m;
-  REP(i, m) {
-    int a, b;
-    cin >> a >> b;
-    a--; b--;
-    g[a][b] = 1;
+  REP(i, m){
+    cin >> x >> y;
+    x--; y--;
+    g[x][y] = 1;
   }
-
-  ll dp[1<<n] = {};
-  dp[0] = 1; // 空集合のとき、トポソの経路数は1
-  REP(i, 1<<n){
-    REP(j, n){ // j = iから取り除くうさぎを列挙
-      if(i & (1<<j)) continue; // iにjが含まれている場合
-      bool f = true; // jが右端か
-      //kがiに含まれている && j -> kがあるなら右端にこない
-      REP(k, n) if((i & (1<<k)) && g[j][k] == 1) f = false;
-      //右端ならi + {j} = Sの通り数に加える
-      if(f) dp[i | (1<<j)] += dp[i];
+  dp[0] = 1; //空集合 = 1
+  REP(bit, (1<<n)){
+    REP(j, n){
+      //iにjが含まれていたらcontinue
+      if((bit>>j) & 1) continue;
+      bool f = true;
+      //j -> k があるならば、右端 (最速) にこない
+      REP(k, n) if(((bit>>k)&1) && g[j][k] == 1) f = false;
+      //右端ならば i+{j}=Sの通り数 加える
+      if(f) dp[bit|(1<<j)] += dp[bit];
     }
   }
 
   cout << dp[(1<<n) - 1] << endl;
-  
+
   return 0;
 }
 
 /*
-  (i>>j) % 2: iに対するj番目のbit情報
-i = 1100,
-j = 0 -> 1100
-j = 1 -> 110
-j = 2 -> 11
-j = 3 -> 1
- */
+  Recipe:
+  1. dp[0] = 1
+  2. REP(bit, (1<<n)) REP(j, n)
+  3. if j が bit集合に含まれている -> continue
+  4. REP(k, n) kはbit集合に含まれていて、k->jに遷移できる -> continue
+  5. 遷移できないならば、dp[bit|(1<<j)] += dp[bit]
+  6. 解は dp[(1<<n)-1]
+*/
