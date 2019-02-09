@@ -19,6 +19,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <climits>
+#include <iomanip>
+
 #define REP(i, n) for(int i = 0; i < (int)(n); i++)
 #define FOR(i, j, k) for(int i = (int)(j); i < (int)(k); ++i)
 #define ROF(i, j, k) for(int i = (int)(j); i >= (int)(k); --i)
@@ -37,12 +39,17 @@ ll MUL(ll x, ll y) { return x*y % MOD; }
 ll POW(ll x, ll e) { ll v=1; for(; e; x=MUL(x,x), e>>=1) if (e&1) v = MUL(v,x); return v; }
 ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 
+template<class T> bool chmax(T &a,const T &b){if(a<b){a=b;return 1;}return 0;}
+template<class T> bool chmin(T &a,const T &b){if(a>b){a=b;return 1;}return 0;}
 
 int
 main(void){  
+  ios_base::sync_with_stdio(false);
+  cin.tie(0);
+
   int n;
   string s;
-  cin >> n >> s;
+
     
   
   return 0;
