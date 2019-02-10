@@ -94,7 +94,7 @@ main(void){
     else if(s[i] == '1') num += 1;
     sum[i+1] = sum[i] + num;
   }
-  //なぜ 1?
+  //なぜ 1? 場合の数は1?
   dp[0][0] = 1;
   REP(i, n){
     REP(r, i+1){
