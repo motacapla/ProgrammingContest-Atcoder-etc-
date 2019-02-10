@@ -112,7 +112,7 @@ main(void){
     }
   }
   ll res = 0LL;
-  //赤の数が0~n個の場合 * comb の総和
+  //赤の数が0~n個の場合 * comb の総和, rを使った数だけ引く
   REP(r, n+1){
     res += dp[n][r] * comb(n, sum[n]-r)%MOD;
     res %= MOD;
