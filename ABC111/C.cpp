@@ -43,6 +43,10 @@ int cnt_even[100100], cnt_odd[100100];
 const int INF=1e9;
 vector<int> even, odd;
 
+/*
+  evenとoddの最頻値にすればよくて、最頻値がかぶるなら2番目が最適
+ */
+
 int
 main(void){  
   int n;
