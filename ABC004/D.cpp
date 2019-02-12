@@ -52,6 +52,7 @@ const int MAXN = 1000;
 //http://competitive-kivantium.hateblo.jp/entry/2016/12/15/104215
 
 int dp[MAXN][MAXN];
+int R, G ,B;
 
 int cost(int pos, int remain){
   if(remain >= G+B) return abs(400-pos);
@@ -63,12 +64,12 @@ int
 main(void){  
   ios_base::sync_with_stdio(false);
 
-  int R, G ,B;
   cin >> R >> G >> B;
 
   int total = R+G+B;
 
   REP(i, MAXN) REP(j, MAXN) dp[i][j] = INF;
+  //マーブルを1つも置いてない時は操作回数0  
   REP(i, MAXN) dp[i][total] = 0;
 
   FOR(i,1,MAXN){
