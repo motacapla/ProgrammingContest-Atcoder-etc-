@@ -42,8 +42,11 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 template<class T> bool chmax(T &a,const T &b){if(a<b){a=b;return 1;}return 0;}
 template<class T> bool chmin(T &a,const T &b){if(a>b){a=b;return 1;}return 0;}
 
-//解説AC
-//http://competitive-kivantium.hateblo.jp/entry/2016/12/14/144030
+// 解説AC
+// http://competitive-kivantium.hateblo.jp/entry/2016/12/14/144030
+
+// w*hが長方形のたてxよこ, 地点x,yにおいたときの総和
+// wとhを0~nまで動かす間に、x, yは残りの限界まで動かす
 
 int D[55][55];
 int acc[55][55];
@@ -84,6 +87,7 @@ main(void){
     REP(h, n+1){
       REP(x, n-w+1){
 	REP(y, n-h+1){
+	  //cout << "w: " << w << " h: " << h << " x: " << x << " y: " << y << " area: "<< area(x,y,w,h) << endl;
 	  memo[w*h] = max(memo[w*h], area(x,y,w,h));
 	}
       }
