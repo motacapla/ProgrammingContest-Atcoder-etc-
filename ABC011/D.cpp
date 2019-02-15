@@ -70,12 +70,17 @@ main(void){
   x/=d;
   y/=d;
   FOR(i, x, n-y+1){
+    //right left
     rl = i;
+    //up down
     ud = n-i;
+    //明らかに遷移できないパターン
     if((rl-x)%2 || (ud-y)%2) continue;
+    //lの数
     l = (rl-x)/2;
+    //dの数
     d = (ud-y)/2;
-    p += nCr(n, rl)*nCr(rl, l)*nCr(ud,d);
+    p += nCr(n, rl)*nCr(rl, l)*nCr(ud, d);
   }
   REP(i, n) p/=4.0;
   cout << setprecision(30) << p << endl;
