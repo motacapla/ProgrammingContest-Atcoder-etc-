@@ -1,81 +1,95 @@
+//#include <bits/stdc++.h>
 #include <iostream>
-#include <algorithm>
-#include <cstdlib>
+#include <complex>
+#include <sstream>
 #include <string>
+#include <algorithm>
+#include <deque>
+#include <list>
+#include <map>
+#include <numeric>
+#include <queue>
+#include <vector>
+#include <set>
+#include <limits>
+#include <cstdio>
+#include <cctype>
+#include <cmath>
+#include <cstring>
+#include <cstdlib>
+#include <ctime>
+#include <climits>
+#include <iomanip>
+
+#define REP(i, n) for(int i = 0; i < (int)(n); i++)
+#define FOR(i, j, k) for(int i = (int)(j); i < (int)(k); ++i)
+#define ROF(i, j, k) for(int i = (int)(j); i >= (int)(k); --i)
+#define FORLL(i, n, m) for(long long i = n; i < (long long)(m); i++)
+#define SORT(v, n) sort(v, v+n)
+#define REVERSE(v) reverse((v).begin(), (v).end())
 
 using namespace std;
 using ll = long long;
+const ll MOD=1000000007LL;
+typedef pair<int, int> P;
+
+ll ADD(ll x, ll y) { return (x+y) % MOD; }
+ll SUB(ll x, ll y) { return (x-y+MOD) % MOD; }
+ll MUL(ll x, ll y) { return x*y % MOD; }
+ll POW(ll x, ll e) { ll v=1; for(; e; x=MUL(x,x), e>>=1) if (e&1) v = MUL(v,x); return v; }
+ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
+
+template<class T> bool chmax(T &a,const T &b){if(a<b){a=b;return 1;}return 0;}
+template<class T> bool chmin(T &a,const T &b){if(a>b){a=b;return 1;}return 0;}
+
+int a[100100];
+
 int
-main(void){
+main(void){  
+  ios_base::sync_with_stdio(false);
+  cin.tie(0);
+
   int n;
   cin >> n;
-  ll a[n];
-  for(int i=0; i<n; i++) {
-    cin >> a[i];
-  }
+  REP(i, n) cin >> a[i];
 
-  
-  ll sum = 0L;
-  int count=0;
-  int f,p, prev_p;
-
-  sum = a[0];
-  if(sum > 0){
-    prev_p = 1;
-  }else if(sum < 0){
-    prev_p = 0;
-  }else{
-    if(a[1] > 0){
-      prev_p = 0;
-      sum--;
-      count++;
-    }else{
-      prev_p = 1;
-      sum++;
-      count++;
-    }
-  }
-  cout << "prevp: " << prev_p << " sum: "<< sum << "count: " << count <<endl;
-  for(int i=1; i<n; i++){
-    sum = sum + a[i];
-    if(sum > 0){
-      p = 1; //plus
-    }else if(sum < 0){
-      p = 0; //minus
-    }else{
-      if( i < n-1 && a[i+1] > 0){
-	prev_p = 0;
-	sum--;
-	count++;
-      }else{      
-	p = 1;
-	sum++;
-	count++;
+  ll ans1=0, ans2=0;
+  ll sum = 0LL;
+  //plus, minus
+  REP(i, n){
+    sum += a[i];
+    if(i%2 == 0){
+      if(sum >= 0){
+	ans1 += sum+1;
+	sum = -1;
       }
     }
-    
-    if(prev_p == p){
-      cout << i << " prev_p == p"  << endl;
-      if(sum < 0){
-	while(sum <= 0){
-	  sum++;
-	  count++;
-	  p = 1;
-	}
-      }
-      else{
-	while(sum >= 0){
-	  sum--;
-	  count++;
-	  p = 0;
-	}      
+    else{
+      if(sum <= 0){
+	ans1 += 1-sum;
+	sum = 1;
       }
     }
-    prev_p = p;
-    cout << "prevp: " << prev_p << " sum: "<< sum << "count: " << count <<endl;
   }
+  sum = 0LL;
+  //minus, plus
+  REP(i, n){
+    sum += a[i];
+    if(i%2 == 1){
+      if(sum >= 0){
+	ans2 += sum+1;
+	sum = -1;
+      }
+    }
+    else{
+      if(sum <= 0){
+	ans2 += 1-sum;
+	sum = 1;
+      }
+    }
+  }  
 
-  cout << count << endl;
+  cout << min(ans1, ans2) << endl;
   
   return 0;
 }
