@@ -45,6 +45,8 @@ template<class T> bool chmin(T &a,const T &b){if(a>b){a=b;return 1;}return 0;}
 //string s[]だとうまくいかない、未定義動作?
 //string s[100];
 char s[100][100];
+//それか↓のやつ
+//vector<string> s;
 
 int dx[4] = {-1,1,0,0};
 int dy[4] = {0,0,-1,1};
