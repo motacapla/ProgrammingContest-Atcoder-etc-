@@ -50,6 +50,7 @@ priority_queue<int, vector<int>, greater<int> > q_ascending;
 //3. 重さの代わりに価値をつめ放題する (最小の重さがつまれるように)
 //4. loopの境界n+1まで
 //5. 初期化はdp[0][0] = 0, dp[0][i] = INF
+//6. 答えの部分はdp[N][V以下]となる
 
 ll N, W, V;
 ll w[110], v[110];
@@ -81,9 +82,9 @@ main(void){
       }
     }
   }
-
+  
   ll ans = 0LL;
-  ROF(i, V, 0){
+  ROF(i, VAL-1, 0){
     if(dp[N][i] <= W){
       cout << i << endl;
       return 0;
