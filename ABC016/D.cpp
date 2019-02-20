@@ -41,6 +41,9 @@ ll nl, nm;
 pair<double, double> xy[110];
 pair<double, double> a, b;
 
+//解説AC
+//交差判定
+//https://qiita.com/ykob/items/ab7f30c43a0ed52d16f2
 bool cross_(double ax, double ay, double bx, double by, double x1, double y1, double x2, double y2){
   double a = (ax-bx) * (y1-ay) - (ay-by) * (x1-ax);
   double b = (ax-bx) * (y2-ay) - (ay-by) * (x2-ax);
