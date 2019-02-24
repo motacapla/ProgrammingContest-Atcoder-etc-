@@ -56,20 +56,25 @@ main(void){
   REP(i, n) {
     cin >> a[i];
   }
-  //1:first win, 0:second win
+  //1:相手のターン, 0:自分のターン
   //dp[k]:= k個の局面で勝ち負け
   
-  FOR(i, 1, k+1){
+  FOR(i,1,k+1){
     REP(j, n){
       if(i-a[j]>=0){
 	dp[i] |= !dp[i-a[j]];
       }
     }
+    /*
+    cout << "i:" << i << endl;
+    FOR(j,1,k+1) cout << dp[j] << " ";
+    cout << endl;    
+    */
   }
-  /*
+  
   FOR(i,1,k+1) cout << dp[i] << " ";
   cout << endl;
-  */
+ 
   cout << (dp[k] ? "First" : "Second") << endl;
   
   return 0;
