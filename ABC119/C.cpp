@@ -49,6 +49,7 @@ int n, A, B, C;
 ll dfs(int cur,int a, int b, int c){
   if(cur == n){
     if(min(min(a, b), c) > 0){
+      //合成してないぶんも+10してるから、-30で引いておく
       return abs(a-A)+abs(b-B)+abs(c-C)-30;
     }
     else return INF;
