@@ -41,7 +41,8 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 
 template<class T> bool chmax(T &a,const T &b){if(a<b){a=b;return 1;}return 0;}
 template<class T> bool chmin(T &a,const T &b){if(a>b){a=b;return 1;}return 0;}
-
+//解説AC
+//https://agc008.contest.atcoder.jp/submissions/4391466
 int
 main(void){  
   ios_base::sync_with_stdio(false);
