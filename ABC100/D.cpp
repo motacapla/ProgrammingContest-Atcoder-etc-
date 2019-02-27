@@ -38,43 +38,35 @@ ll MUL(ll x, ll y) { return x*y % MOD; }
 ll POW(ll x, ll e) { ll v=1; for(; e; x=MUL(x,x), e>>=1) if (e&1) v = MUL(v,x); return v; }
 ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 
-//ll x[1001], y[1001], z[1001];
-
 ll xyz[1010][3];
 
-ll tmp[3];
 
 int
 main(void){  
   int n, m;
   cin >> n >> m;
 
-  ll ans;
+  ll ans=0;
 
   REP(i, n) REP(j, 3) cin >> xyz[i][j];
   
-  //さいだい、 1000 C 500 程度の for ... むり
-
-  //cout << (1<<1) << endl;
-
-  //8通りためす
   // 001 ... xy -z
   REP(bit, (1<<3)){
-    REP(i, 3) tmp[i] = 0;    
+    vector<ll> v;    
     REP(i, n){
+      ll tmp = 0;      
       REP(j, 3){
-	//bitが立つ
-	if(bit & (1<<j)) tmp[j] -= xyz[i][j];       
-	else tmp[j] += xyz[i][j];	
-	cout << bitset<3>(bit) << " i: " << i << " j:" << j << " sum:" << tmp[j] << endl; 
-	
+	if(bit & (1<<j)) tmp -= xyz[i][j];       
+	else tmp += xyz[i][j];	
+	//cout << bitset<3>(bit) << " i: " << i << " j:" << j << " sum:" << tmp << endl; 	
       }
+      v.push_back(tmp);
     }
-    
-    //cout << bitset<4>(bit) << endl;
-    REP(i, 3) cout << abs(tmp[i]) << " ";
-    cout << endl;
+    sort(v.begin(), v.end(), greater<ll>());
+    ll res = 0;
+    REP(i, m) res += v[i];    
+    ans = max(ans, res);
   }
-  
+  cout << ans << endl;  
   return 0;
 }
