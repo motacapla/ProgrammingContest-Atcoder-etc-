@@ -82,7 +82,7 @@ void turn(int x, int y, char c){
     }
   }    
 }
-
+//いくつひっくり返せるか調べる
 int simulate(int x, int y, char c){
   int ret = 0;
   char e_c = (c == 'o' ? 'x' : 'o');
