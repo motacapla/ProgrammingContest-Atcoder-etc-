@@ -156,6 +156,6 @@ main(void){
     if(i > 0)
       cout << e << endl;
     i++;
-  }
+  } 
   return 0;
 }
