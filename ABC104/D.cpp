@@ -47,9 +47,14 @@ ll dp[100010][4];
 
 //解説AC
 //https://atcoder.jp/contests/abc104/submissions/2955456
-
+//http://drken1215.hatenablog.com/entry/2018/08/05/224100_1
 //1. 状態["","A","AB","ABC"]
 //2. 順序 後ろから
+
+void add(long long &a, long long b) {
+  a += b;
+  if (a >= MOD) a -= MOD;
+}
 
 int
 main(void){  
@@ -60,7 +65,7 @@ main(void){
   cin >> s;
   int n = s.size();
 
-  
+  /*
   dp[n][3] = 1;
   ROF(i, n-1, 0){
     ROF(j, 3, 0){      
@@ -78,8 +83,29 @@ main(void){
       dp[i][j] %= MOD;      
     }
   }
-
   cout << dp[0][0] << endl;
-  
+  */
+
+
+  dp[0][0] = 1;
+  REP(i, n){
+    REP(j, 5){
+      if(s[i] == '?') add(dp[i+1][j], dp[i][j]*3LL%MOD);
+      else add(dp[i+1][j], dp[i][j]);
+    }
+    if(s[i] == 'A' || s[i] == '?') {
+      dp[i+1][1] += dp[i][0];
+      dp[i+1][1] %= MOD;
+    }
+    if(s[i] == 'B' || s[i] == '?') {
+      dp[i+1][2] += dp[i][1];
+      dp[i+1][2] %= MOD;
+    }
+    if(s[i] == 'C' || s[i] == '?') {
+      dp[i+1][3] += dp[i][2];
+      dp[i+1][3] %= MOD;
+    }      
+  }
+  cout << dp[n][3] << endl;
   return 0;
 }
