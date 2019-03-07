@@ -42,45 +42,56 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 template<class T> bool chmax(T &a,const T &b){if(a<b){a=b;return 1;}return 0;}
 template<class T> bool chmin(T &a,const T &b){if(a>b){a=b;return 1;}return 0;}
 
-/*
-vector<pair<ll,ll> > G[MAXN];
-G[from].push_back(pair<ll,ll>(to, cost));
-for(ll i = 0; i < V; ++i) {
-    for(ll j = 0; j < (ll)G[i].size(); ++j) {
-        // from `i` to `G[i][j].first` cost `G[i][j].second`
-    }
-}
- */
-//https://www.qoosky.io/techs/5cd1a59497
+//ベルマンフォード法
+//https://abc061.contest.atcoder.jp/submissions/4484303
 
-const int INF = 1e8;
-const int MAX_N = 1e8;
-vector<pair<ll,ll> > G[MAX_N];
+struct edge {ll to, cost;};
+vector<vector<edge>> g;
+const ll INF = 1e18;
+const int MAX_N = 1e5;
+
 ll dist[MAX_N];
 ll n,m;
 
-/*
-void bellman_ford(ll all, ll start){
-  memset(dist, INF*INF, sizeof(dist));
-  dist[0] = 0;
-  REP(i, 5) cout << dist[i] << endl;
+bool bellman_ford(ll s){
+  REP(i,n) dist[i] = INF;
+  dist[s] = 0;
+
+  bool negative_cycle = false;
+
+  REP(i, n){
+    REP(v, n){
+      for(edge e: g[v]){
+	if(dist[v] != INF && dist[e.to] > dist[v] + e.cost){
+	  dist[e.to] = dist[v] + e.cost;
+	  //n回目に n-1 に更新がある -> 負のサイクル
+	  if(i == n-1 && e.to == n-1){
+	    dist[e.to] = -INF;
+	    negative_cycle = true;
+	  }
+	}
+      }
+    }
+  }
+  return negative_cycle;
 }
-*/
 
 int
 main(void){  
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   cin >> n >> m;  
-  
+  g.assign(n, vector<edge>());  
   REP(i, m){
     ll a, b, c;
     cin >> a >> b >> c;
     a--; b--; c*=-1;
-    G[a].push_back(make_pair(b, c));
+    g[a].push_back(edge{b, c});
   }
+  
+  bool negative_cycle = bellman_ford(0);
 
-  bellman_ford(n, 0);
+  cout << (!negative_cycle ? to_string(-dist[n-1]) : "inf" ) << endl;
   
   return 0;
 }
