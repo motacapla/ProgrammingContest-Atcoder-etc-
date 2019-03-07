@@ -85,7 +85,7 @@ main(void){
   
   wf();
   
-  ll ans = INF;
+  ll ans = INF; 
   while(next_permutation(r.begin(), r.end())){
     ll res = 0;
     REP(i, R-1) res += g[r[i]][r[i+1]];
