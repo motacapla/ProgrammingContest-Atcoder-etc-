@@ -42,8 +42,9 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 template<class T> bool chmax(T &a,const T &b){if(a<b){a=b;return 1;}return 0;}
 template<class T> bool chmin(T &a,const T &b){if(a>b){a=b;return 1;}return 0;}
 
-//struct edge {ll to, cost;};
-//vector<vector<edge>> g;
+//wfで INFにするの 忘れない 対角ゼロも　忘れないでね
+
+
 const ll INF = 1e18;
 const int MAX_N = 1e4;
 
@@ -69,9 +70,10 @@ main(void){
   cin >> N >> M >> R;
   vector<ll> r(R);
   REP(i,R) cin >> r[i], r[i]--;
+  sort(r.begin(), r.end());
 
-  //wfで INFにするの 忘れない?
-  //REP(i, N) REP(j, N) g[i][j] = INF;
+  REP(i, N) REP(j, N) g[i][j] = INF;
+  REP(i, N) g[i][i] = 0;
   
   REP(i,M){
     ll a,b,c;
