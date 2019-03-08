@@ -53,7 +53,53 @@ const int MAX_N = 1e5;
 ll dist[MAX_N];
 ll n,m;
 
+vector<pair<ll, ll>> edge;
+vector<ll> cost;
+
 bool bellman_ford(ll s){
+  REP(i,n) dist[i] = INF;  
+  dist[s] = 0;
+  bool flag = true;
+  REP(v, n){
+    flag = false;
+    REP(i, m){
+      ll s = edge[i].first, t = edge[i].second;
+      if(dist[s] != INF && dist[t] > dist[s] + cost[i]){
+	dist[t] = dist[s] + cost[i];
+	flag = true;	  	
+	//n回目に n-1 に更新がある -> 負のサイクル
+	if(v == n-1 && t == n-1){
+	  return true;
+	}
+      }      
+    }
+    if(!flag) break;
+  }
+  return false;
+}
+
+int
+main(void){  
+  ios_base::sync_with_stdio(false);
+  cin.tie(0);
+  cin >> n >> m;  
+  
+  REP(i, m){
+    ll a, b, c;
+    cin >> a >> b >> c;
+    a--; b--; c*=-1;
+    edge.push_back(make_pair(a, b));
+    cost.push_back(c);
+  }
+  
+  cout << (!bellman_ford(0) ? to_string(-dist[n-1]) : "inf" ) << endl;
+  
+  return 0;
+}
+
+
+/*
+bool bellman_ford_naive(ll s){
   REP(i,n) dist[i] = INF;
   dist[s] = 0;
 
@@ -75,23 +121,4 @@ bool bellman_ford(ll s){
   }
   return negative_cycle;
 }
-
-int
-main(void){  
-  ios_base::sync_with_stdio(false);
-  cin.tie(0);
-  cin >> n >> m;  
-  g.assign(n, vector<edge>());  
-  REP(i, m){
-    ll a, b, c;
-    cin >> a >> b >> c;
-    a--; b--; c*=-1;
-    g[a].push_back(edge{b, c});
-  }
-  
-  bool negative_cycle = bellman_ford(0);
-
-  cout << (!negative_cycle ? to_string(-dist[n-1]) : "inf" ) << endl;
-  
-  return 0;
-}
+*/
