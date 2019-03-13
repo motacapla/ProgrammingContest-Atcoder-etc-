@@ -20,6 +20,8 @@
 #include <ctime>
 #include <climits>
 #include <iomanip>
+#include <stack>
+#include <bitset>
 
 #define REP(i, n) for(int i = 0; i < (int)(n); i++)
 #define FOR(i, j, k) for(int i = (int)(j); i < (int)(k); ++i)
