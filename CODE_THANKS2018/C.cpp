@@ -60,6 +60,8 @@ main(void){
   }
   sort(x.begin(), x.end());
   ll sum = 0LL;
+  //実験すると diff個数=(x[i]以下の個数)*(x[i]より大きい個数)で表せる
+  //端から1*(n-1), 2*(n-2), 3*(n-3) ... となる
   REP(i, n) sum += x[i]*i - x[i]*(n-1-i);
   cout << sum << endl;
   
