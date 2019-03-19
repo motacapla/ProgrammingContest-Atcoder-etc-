@@ -1,5 +1,3 @@
-//$g++ -std=c++11 Template.cpp 
-
 //#include <bits/stdc++.h>
 #include <iostream>
 #include <complex>
@@ -22,6 +20,8 @@
 #include <ctime>
 #include <climits>
 #include <iomanip>
+#include <stack>
+#include <bitset>
 
 #define REP(i, n) for(int i = 0; i < (int)(n); i++)
 #define FOR(i, j, k) for(int i = (int)(j); i < (int)(k); ++i)
@@ -41,25 +41,30 @@ ll MUL(ll x, ll y) { return x*y % MOD; }
 ll POW(ll x, ll e) { ll v=1; for(; e; x=MUL(x,x), e>>=1) if (e&1) v = MUL(v,x); return v; }
 ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 
-priority_queue<int> q_descending;
-priority_queue<int, vector<int>, greater<int> > q_ascending;
-
-P p[100001];
+template<class T> bool chmax(T &a,const T &b){if(a<b){a=b;return 1;}return 0;}
+template<class T> bool chmin(T &a,const T &b){if(a>b){a=b;return 1;}return 0;}
 
 int
 main(void){  
   ios_base::sync_with_stdio(false);
+  cin.tie(0);
 
-  int n;
-  cin >> n;
+  ll N;
+  cin >> N;
 
-  REP(i, n) cin >> p[i].first >> p[i].second;
-
-  sort(p, p+n, greater<P>());
-
-  
-  cout << p[0].first + p[0].second << endl;  
-  
-  
+  bool ok = false;
+  FOR(n,1,3501) {
+    FOR(w,1,3501){
+      ll vm = 4*n*w-N*w-N*n, vc = N*n*w;
+      if(vm <= 0) continue;
+      //cerr << "vm" << vm << " vc" << vc << endl;      
+      if(vc%vm == 0){
+	cout << vc/vm << " " << n << " " << w << endl;
+	ok = true;
+	break;
+      }
+    }
+    if(ok) break;
+  }  
   return 0;
 }
