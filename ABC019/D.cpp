@@ -65,6 +65,6 @@ main(void){
     cin >> val;
     ans = max(ans, val);
   }
-  cout << ans << endl;
+  cout << "! " <<  ans << endl;
   return 0;
 }
