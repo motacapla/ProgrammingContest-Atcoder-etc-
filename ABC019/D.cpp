@@ -44,8 +44,7 @@ ll DIV(ll x, ll y) { /*assert(y%MOD!=0);*/ return MUL(x, POW(y, MOD-2)); }
 template<class T> bool chmax(T &a,const T &b){if(a<b){a=b;return 1;}return 0;}
 template<class T> bool chmin(T &a,const T &b){if(a>b){a=b;return 1;}return 0;}
 
-// double-sweep 実装
-int ans, val, index=-1;
+int ans, val, idx=-1;
 
 int
 main(void){  
@@ -58,11 +57,11 @@ main(void){
     if(i+1 == 1) continue;
     cout << "? 1 " << i+1 << endl;
     cin >> val;
-    if(ans < val) index = i+1, ans = val;
+    if(ans < val) idx = i+1, ans = val;
   }
   REP(i, n){
-    if(i+1 == index) continue;
-    cout << "? " << index << " " i+1 << endl;
+    if(i+1 == idx) continue;
+    cout << "? " << idx << " "<< i+1 << endl;
     cin >> val;
     ans = max(ans, val);
   }
