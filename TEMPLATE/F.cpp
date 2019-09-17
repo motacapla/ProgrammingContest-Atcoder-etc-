@@ -20,8 +20,6 @@
 #include <ctime>
 #include <climits>
 #include <iomanip>
-#include <stack>
-#include <bitset>
 
 #define REP(i, n) for(int i = 0; i < (int)(n); i++)
 #define FOR(i, j, k) for(int i = (int)(j); i < (int)(k); ++i)
@@ -32,7 +30,7 @@
 
 using namespace std;
 using ll = long long;
-const ll MOD=1000000007LL;
+const int MOD=1e9+7;
 typedef pair<int, int> P;
 
 ll ADD(ll x, ll y) { return (x+y) % MOD; }
